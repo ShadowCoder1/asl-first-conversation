@@ -1,0 +1,118 @@
+{
+ "version": 1,
+ "source": "Sign videos: PopSign ASL v1.0 (Starner et al., 2023), https://signdata.cc.gatech.edu/view/datasets/popsign_v1_0/, licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Clips were trimmed, scaled and re-encoded.",
+ "demos": [
+  {
+   "id": "hello",
+   "gloss": "HELLO",
+   "lesson": true,
+   "file": "hello.json",
+   "frames": 16,
+   "bytes": 9992
+  },
+  {
+   "id": "yes",
+   "gloss": "YES",
+   "lesson": true,
+   "file": "yes.json",
+   "frames": 15,
+   "bytes": 9409
+  },
+  {
+   "id": "no",
+   "gloss": "NO",
+   "lesson": true,
+   "file": "no.json",
+   "frames": 10,
+   "bytes": 7526
+  },
+  {
+   "id": "please",
+   "gloss": "PLEASE",
+   "lesson": true,
+   "file": "please.json",
+   "frames": 17,
+   "bytes": 11173
+  },
+  {
+   "id": "thankyou",
+   "gloss": "THANK-YOU",
+   "lesson": true,
+   "file": "thankyou.json",
+   "frames": 12,
+   "bytes": 8115
+  },
+  {
+   "id": "water",
+   "gloss": "WATER",
+   "lesson": true,
+   "file": "water.json",
+   "frames": 15,
+   "bytes": 8850
+  },
+  {
+   "id": "bye",
+   "gloss": "BYE",
+   "lesson": true,
+   "file": "bye.json",
+   "frames": 22,
+   "bytes": 13558
+  },
+  {
+   "id": "milk",
+   "gloss": "MILK",
+   "lesson": false,
+   "file": "milk.json",
+   "frames": 15,
+   "bytes": 9333
+  },
+  {
+   "id": "food",
+   "gloss": "EAT",
+   "lesson": false,
+   "file": "food.json",
+   "frames": 9,
+   "bytes": 5859
+  },
+  {
+   "id": "hungry",
+   "gloss": "HUNGRY",
+   "lesson": false,
+   "file": "hungry.json",
+   "frames": 19,
+   "bytes": 12554
+  },
+  {
+   "id": "thirsty",
+   "gloss": "THIRSTY",
+   "lesson": false,
+   "file": "thirsty.json",
+   "frames": 27,
+   "bytes": 16072
+  },
+  {
+   "id": "happy",
+   "gloss": "HAPPY",
+   "lesson": false,
+   "file": "happy.json",
+   "frames": 16,
+   "bytes": 10227
+  },
+  {
+   "id": "minemy",
+   "gloss": "MY",
+   "lesson": false,
+   "file": "minemy.json",
+   "frames": 9,
+   "bytes": 5811
+  },
+  {
+   "id": "like",
+   "gloss": "LIKE",
+   "lesson": false,
+   "file": "like.json",
+   "frames": 9,
+   "bytes": 6702
+  }
+ ]
+}

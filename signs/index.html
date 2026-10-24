@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- signs/index.html: First Conversation, a beginner ASL lesson (docs/signs-design.md). Learn 7 one-handed signs from
+     a demonstration, sign each to the camera, then use them in a short signed chat. Paths are written from signs/. -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15130f" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-title" content="First Conversation">
+<title>First Conversation</title>
+<meta name="description" content="Your first conversation in American Sign Language: learn 7 signs with your camera, then use them in a short chat.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="First Conversation">
+<meta property="og:title" content="Your first ASL conversation">
+<meta property="og:description" content="Learn 7 signs with your camera, then use them in a real back-and-forth. Nothing is recorded or saved.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2726%27 fill=%27%231e9e6a%27/%3E%3Cpath d=%27M30 38h40a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8H48l-12 9v-9h-6a8 8 0 0 1-8-8V46a8 8 0 0 1 8-8z%27 fill=%27%23fff%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://storage.googleapis.com" crossorigin>
+<link rel="preload" href="../assets/fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="content.json" as="fetch" crossorigin>
+<link rel="stylesheet" href="app.css">
+<!-- If the app's code cannot load (a dropped connection), Start says so and reloads, instead of staying "Loading…". -->
+<script>
+function bootFail() {
+  var b = document.getElementById("btn-start");
+  if (!b || !b.disabled || window.__signs) return;
+  b.disabled = false; b.textContent = "Couldn't load. Tap to try again";
+  b.onclick = function () { location.reload(); };
+}
+setTimeout(bootFail, 25000);
+</script>
+<script type="module" src="app.js" onerror="bootFail()"></script>
+<!-- the whole module graph at once, instead of one level of imports per round trip -->
+<link rel="modulepreload" href="app.js">
+<link rel="modulepreload" href="capture.js">
+<link rel="modulepreload" href="mock-recognizer.js">
+<link rel="modulepreload" href="lesson.js">
+<link rel="modulepreload" href="avatar.js">
+<link rel="modulepreload" href="../js/core/tracker.js">
+<link rel="modulepreload" href="../config.js">
+<link rel="modulepreload" href="../tutor/pick-hand.js">
+<link rel="modulepreload" href="../tutor/hand-frame.js">
+<link rel="modulepreload" href="../tutor/vec.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.0.1/vision_bundle.mjs" crossorigin>
+</head>
+<body data-screen="welcome">
+
+<!-- 1. Welcome: what this is, and the one button. The trackers download while this is read. -->
+<section class="screen screen-welcome" id="welcome" aria-labelledby="welcome-title">
+  <div class="welcome-inner">
+    <div class="hero" aria-hidden="true">
+      <div class="hero-card">
+        <div class="msg msg-maya"><span class="maya-face">M</span><span class="bubble">Are you thirsty?</span></div>
+        <div class="msg msg-you"><span class="hero-chip hero-chip-done">YES</span></div>
+        <div class="msg msg-maya"><span class="maya-face">M</span><span class="bubble">What would you like?</span></div>
+        <div class="msg msg-you"><span class="hero-chip hero-chip-done">WATER</span><span class="hero-chip hero-chip-now">PLEASE</span></div>
+      </div>
+    </div>
+    <h1 id="welcome-title" tabindex="-1">Your first ASL conversation</h1>
+    <p class="lede" id="welcome-lede">Learn 7 signs, then use them in a real back-and-forth.</p>
+    <ul class="sign-row" id="sign-row" aria-label="The signs you will learn"></ul>
+    <ol class="steps">
+      <li><span class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></span>
+        <span id="step-phone">Hold your phone in your <b class="other-hand-word">left</b> hand at arm's length, so your head and shoulders fit.</span></li>
+      <li><span class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12m0-1V4a1.5 1.5 0 0 1 3 0v7m0-.5V5.5a1.5 1.5 0 0 1 3 0V14c0 4-2.5 7-6.5 7S6 18.5 5 16l-1.6-3.3a1.4 1.4 0 0 1 2.4-1.4L8 14"/></svg></span>
+        <span>Watch each sign, then make it with your <b class="hand-word">right</b> hand.</span></li>
+      <li><span class="step-icon step-icon-maya" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 5.5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8l-4.5 3.5v-3.5H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z"/><path d="M8 11.5h.01M12 11.5h.01M16 11.5h.01"/></svg></span>
+        <span>Then chat with Maya. She writes, you answer in ASL.</span></li>
+    </ol>
+    <p class="inapp" id="inapp-note" hidden>
+      This page needs your camera, which apps like this one often block. If it doesn't work, open it in
+      <span id="inapp-browser">your browser</span>: <button type="button" class="link-btn" id="btn-copy-inapp">copy the link</button>
+    </p>
+  </div>
+  <div class="welcome-cta">
+    <button type="button" class="btn btn-primary" id="btn-start" disabled>Loading…</button>
+    <div class="loadline" id="loadline" aria-live="polite">
+      <div class="loadbar" aria-hidden="true"><div class="loadbar-fill" id="loadbar-fill"></div></div>
+      <span id="loadline-text">Getting the lesson ready…</span>
+    </div>
+    <p class="fineprint" id="privacy-line">Video stays on your phone. Nothing is recorded or saved.</p>
+  </div>
+</section>
+
+<!-- 2. The lesson. One screen with the camera for all of it (the check, each sign, the chat), so the camera is started
+     once and never moves; the cards come and go over it. -->
+<section class="screen screen-lesson" id="lesson" aria-label="Lesson">
+  <header class="topbar">
+    <button type="button" class="icon-btn" id="btn-close" aria-label="Quit the lesson">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="progress" id="progress" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="13" aria-valuenow="0">
+      <div class="progress-fill progress-zero" id="progress-fill"></div>
+    </div>
+    <button type="button" class="icon-btn" id="btn-sound" aria-label="Sound" aria-pressed="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="ico-sound-on"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="ico-sound-off"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>
+    </button>
+  </header>
+
+  <div class="lesson-main" id="lesson-main">
+    <div class="stage-wrap" id="stage-wrap">
+      <div class="stage" id="stage" data-state="idle">
+        <div class="mirror">
+          <video id="cam" playsinline muted autoplay disablepictureinpicture></video>
+          <canvas id="overlay"></canvas>
+        </div>
+        <!-- the camera check: where the head and shoulders go -->
+        <svg class="guide" id="guide" viewBox="0 0 300 400" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
+          <path d="M150 64c-34 0-58 27-58 62 0 27 12 50 30 61-46 9-84 36-96 76l-6 137h260l-6-137c-12-40-50-67-96-76 18-11 30-34 30-61 0-35-24-62-58-62z"/>
+        </svg>
+        <!-- the sign asked for -->
+        <div class="word-pill" id="word-pill" hidden>
+          <span class="word-dot" aria-hidden="true"></span>
+          <span class="word-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <b id="word-gloss">HELLO</b>
+        </div>
+        <!-- the chat with Maya -->
+        <div class="chat" id="chat" aria-live="polite"></div>
+        <!-- the demonstration, small, in the corner away from the signing hand -->
+        <button type="button" class="pip" id="pip" hidden aria-label="Demonstration. Tap for slow motion.">
+          <span class="pip-media" id="pip-media"></span>
+          <span class="pip-badge" id="pip-badge">½×</span>
+        </button>
+        <div class="stage-message" id="stage-message" hidden>
+          <div class="spinner" aria-hidden="true"></div>
+          <p id="stage-message-text">Starting your camera…</p>
+        </div>
+        <div class="perf" id="perf" hidden></div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel">
+      <!-- the camera check -->
+      <div class="card check-card" id="check-card">
+        <p class="card-title" id="check-title">Let's get you in the picture</p>
+        <ul class="check-steps">
+          <li id="chk-body"><span class="tick" aria-hidden="true"></span><span>Head and shoulders in view</span></li>
+          <li id="chk-hand"><span class="tick" aria-hidden="true"></span><span id="chk-hand-text">Raise your right hand</span></li>
+        </ul>
+        <p class="status" id="check-status" aria-live="polite">Starting your camera…</p>
+        <div class="check-actions" id="check-actions"></div>
+      </div>
+
+      <!-- trying a sign -->
+      <div class="card try-card" id="try-card" data-state="idle" aria-live="polite">
+        <div class="try-head">
+          <span class="try-icon" aria-hidden="true"></span>
+          <p class="try-title" id="try-title">Your turn</p>
+        </div>
+        <p class="try-text" id="try-text"></p>
+        <ul class="checks" id="try-checks" hidden>
+          <li data-part="handshape"><span class="mark" aria-hidden="true"></span>Hand shape</li>
+          <li data-part="location"><span class="mark" aria-hidden="true"></span>Place</li>
+          <li data-part="movement"><span class="mark" aria-hidden="true"></span>Movement</li>
+        </ul>
+        <p class="looks" id="try-looks" hidden></p>
+      </div>
+      <div class="actions try-actions" id="try-actions">
+        <button type="button" class="btn btn-ghost" id="btn-rewatch">Watch again</button>
+        <button type="button" class="btn btn-ghost" id="btn-skip" hidden>Skip</button>
+      </div>
+
+      <!-- the chat: the reply to sign -->
+      <div class="card reply-card" id="reply-card">
+        <p class="reply-label" id="reply-label">Sign your reply</p>
+        <div class="chips" id="chips"></div>
+        <p class="reply-hint" id="reply-hint" hidden></p>
+      </div>
+      <div class="actions chat-actions" id="chat-actions">
+        <button type="button" class="btn btn-ghost" id="btn-skip-reply" hidden>Skip this reply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- watching a sign: over the camera, which stays open underneath -->
+  <div class="watch" id="watch" hidden>
+    <div class="watch-card" role="dialog" aria-modal="false" aria-labelledby="watch-gloss">
+      <p class="eyebrow" id="watch-step">New sign · 1 of 7</p>
+      <div class="watch-body">
+        <div class="demo-col">
+          <div class="demo" id="demo">
+            <div class="demo-media" id="demo-media"></div>
+            <div class="demo-controls">
+              <button type="button" class="demo-btn" id="btn-slow" aria-pressed="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15c0-4 3.5-7 8-7 4.2 0 7 2.6 7.6 6H21a1 1 0 0 1 0 2h-2.5"/><path d="M5.5 15v3M10 15v3M14.5 15v3"/><circle cx="19.2" cy="11" r=".6"/></svg>
+                <span>Slow</span>
+              </button>
+              <button type="button" class="demo-btn" id="btn-play" hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+                <span>Play</span>
+              </button>
+              <button type="button" class="demo-btn demo-icon" id="btn-signer" hidden aria-label="Show another signer">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 5v6h-6"/></svg>
+              </button>
+            </div>
+          </div>
+          <!-- on this Mac only, where PopSign's own clips can be shown: the clip or the drawing -->
+          <div class="demo-source" id="demo-source" hidden role="group" aria-label="Demonstration">
+            <button type="button" data-src="video" aria-pressed="true">Video</button>
+            <button type="button" data-src="avatar" aria-pressed="false">Drawing</button>
+          </div>
+        </div>
+        <div class="watch-words">
+          <h2 class="watch-gloss" id="watch-gloss">HELLO</h2>
+          <p class="watch-english" id="watch-english">hello</p>
+          <p class="watch-howto" id="watch-howto"></p>
+          <ul class="parts" id="watch-parts"></ul>
+          <p class="tip" id="watch-tip" hidden></p>
+        </div>
+      </div>
+      <div class="watch-cta">
+        <button type="button" class="btn btn-primary" id="btn-try">Try it</button>
+        <button type="button" class="btn btn-ghost" id="btn-watch-skip" hidden>Skip this sign</button>
+      </div>
+      <p class="credit" id="demo-credit" hidden></p>
+    </div>
+  </div>
+
+  <!-- between learning and the chat -->
+  <div class="interlude" id="interlude" hidden>
+    <div class="interlude-card" role="dialog" aria-modal="false" aria-labelledby="interlude-title">
+      <div class="interlude-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h2 id="interlude-title">7 signs learned!</h2>
+      <p id="interlude-text">Now chat with Maya. She writes, you answer in ASL, and your signs light up as you make them.</p>
+      <button type="button" class="btn btn-primary" id="btn-chat">Start chatting</button>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Results. -->
+<section class="screen screen-results" id="results" aria-labelledby="results-title">
+  <div class="results-inner">
+    <div class="trophy" id="trophy" aria-hidden="true"></div>
+    <h1 id="results-title" tabindex="-1">You had your first ASL conversation!</h1>
+    <p class="lede" id="results-lede"></p>
+    <h2 class="section-title">Your signs</h2>
+    <ul class="sign-results" id="sign-results"></ul>
+    <h2 class="section-title" id="transcript-title">Your conversation</h2>
+    <div class="transcript" id="transcript"></div>
+  </div>
+  <div class="results-cta">
+    <button type="button" class="btn btn-primary" id="btn-again">Practice again</button>
+    <button type="button" class="btn btn-secondary" id="btn-share">Share</button>
+  </div>
+</section>
+
+<!-- 4. Something went wrong (no camera, permission denied, an in-app browser...). -->
+<section class="screen screen-error" id="error" aria-labelledby="error-title">
+  <div class="error-inner">
+    <div class="error-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h2l1.5-2h6l1.5 2h2A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5z"/><circle cx="12" cy="12" r="3.5"/></svg>
+    </div>
+    <h1 id="error-title" tabindex="-1">We couldn't start your camera</h1>
+    <div class="error-body" id="error-body"></div>
+  </div>
+  <div class="error-cta">
+    <button type="button" class="btn btn-primary" id="btn-retry">Try again</button>
+    <button type="button" class="btn btn-secondary" id="btn-copy" hidden>Copy the link</button>
+  </div>
+</section>
+
+<!-- Quit? -->
+<div class="sheet-backdrop" id="quit-sheet" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="quit-title">
+    <p class="sheet-title" id="quit-title">Stop the lesson?</p>
+    <p class="sheet-text">You can start again any time.</p>
+    <button type="button" class="btn btn-primary" id="btn-keep">Keep going</button>
+    <button type="button" class="btn btn-ghost btn-danger" id="btn-quit">Stop</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<p class="visually-hidden" id="announce" role="status" aria-live="polite"></p>
+<noscript><p class="noscript">This page needs JavaScript to use your camera.</p></noscript>
+</body>
+</html>

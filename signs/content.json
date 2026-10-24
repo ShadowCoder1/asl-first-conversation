@@ -1,0 +1,393 @@
+{
+  "version": 1,
+  "about": "The words of First Conversation's seven signs: what each means, how to make it, a memory hook, its four parts, and one correction per part and direction (signs/feedback.js picks the key). Citation forms were checked in Lifeprint (ASLU), Handspeak, ASL-LEX 2.0 and ASL Signbank, then against how PopSign ASL v1.0's Deaf signers made each sign (the form the sign model learned): three clips per sign looked at frame by frame, and signs/model/templates.json's measures over 450-533 clips from 29-31 signers. The wording is our own. Learner-facing sentences have no digits (tutor/letters.js's rule: no counting joints mid-practice); popsignForm and aslLex are evidence for developers, not for learners.",
+  "sources": [
+    "https://www.lifeprint.com/asl101/pages-signs/h/hello.htm",
+    "https://www.lifeprint.com/asl101/pages-signs/y/yes.htm",
+    "https://www.lifeprint.com/asl101/pages-signs/n/no.htm",
+    "https://www.lifeprint.com/asl101/pages-signs/p/please.htm",
+    "https://www.lifeprint.com/asl101/pages-signs/t/thankyou.htm",
+    "https://www.lifeprint.com/asl101/pages-signs/w/water.htm",
+    "https://www.lifeprint.com/asl101/pages-signs/g/goodbye.htm",
+    "https://www.handspeak.com/word/1015/",
+    "https://www.handspeak.com/word/2443/",
+    "https://www.handspeak.com/word/1496/",
+    "https://www.handspeak.com/word/1658/",
+    "https://www.handspeak.com/word/2186/",
+    "https://www.handspeak.com/word/2360/",
+    "https://aslsignbank.com/dictionary/gloss/482.html",
+    "https://aslsignbank.com/dictionary/gloss/1472.html",
+    "https://aslsignbank.com/dictionary/gloss/512.html",
+    "https://aslsignbank.com/dictionary/gloss/527.html",
+    "https://aslsignbank.com/dictionary/gloss/1198.html",
+    "https://aslsignbank.com/dictionary/gloss/1414.html",
+    "https://aslsignbank.com/dictionary/gloss/425.html",
+    "https://asl-lex.org/",
+    "https://osf.io/zpha4/",
+    "https://signdata.cc.gatech.edu/view/datasets/popsign_v1_0/"
+  ],
+  "signs": {
+    "hello": {
+      "english": "Hello",
+      "gloss": "HELLO",
+      "howTo": "With a flat hand, fingers together, touch the side of your forehead, then move your hand out and away like a small salute.",
+      "tip": "Think of a relaxed salute that says hi.",
+      "parts": {
+        "handshape": "Flat, fingers together",
+        "location": "Side of your forehead, above your eye",
+        "movement": "Out and away from your head, once",
+        "orientation": "Facing forward"
+      },
+      "fixes": {
+        "handshape": "Keep your fingers straight and together, like a flat paddle.",
+        "location": {
+          "default": "Start at the side of your forehead, above your eye.",
+          "higher": "Start higher, at the side of your forehead.",
+          "lower": "Start a little lower, at the side of your forehead.",
+          "closer": "Bring your hand in to your forehead before moving away.",
+          "touch": "Touch the side of your forehead, then move away."
+        },
+        "movement": {
+          "default": "Move your hand out and away from your head, once.",
+          "bigger": "Move your hand farther out from your head.",
+          "smaller": "Keep the move short, just out from your head.",
+          "direction": "Move out to the side and away, not down or across.",
+          "once": "Just one move away, with no waving."
+        },
+        "orientation": "Turn your palm to face forward, away from you."
+      },
+      "commonMistakes": [
+        "Waving side to side instead of one move away from the head.",
+        "Starting with the hand out in the air instead of at the forehead.",
+        "Fingers spread apart instead of together.",
+        "Moving the hand down to the chest instead of out to the side."
+      ],
+      "variants": "A side-to-side wave is also used for hi, and the thumb may be tucked or slightly out. This lesson teaches and checks the salute-like HELLO that PopSign's signers used.",
+      "popsignForm": "All 3 clips: a flat hand at the temple (side of the forehead), palm forward, then one move out to the signing side and a little up, held briefly before the hand drops; no waving. Templates (512 clips, 31 signers): fingertips start about 0.37 shoulder widths above the mouth, the palm ends further out to the signing side (median dx -0.10), median 1 turn-back of the palm and 0 snaps or open-closes.",
+      "aslLex": "D_02_055: closed B (thumb closed), forehead, straight movement away from the head, contact, not repeated.",
+      "sources": [
+        "https://www.handspeak.com/word/1015/",
+        "https://www.lifeprint.com/asl101/pages-signs/h/hello.htm",
+        "https://aslsignbank.com/dictionary/gloss/482.html",
+        "https://asl-lex.org/"
+      ]
+    },
+    "yes": {
+      "english": "Yes",
+      "gloss": "YES",
+      "howTo": "Make a fist in front of your shoulder and nod it down twice at the wrist, like a head nodding yes.",
+      "tip": "Your fist is a little head, nodding yes.",
+      "parts": {
+        "handshape": "Fist, thumb across the front of the fingers",
+        "location": "In front of your shoulder",
+        "movement": "Two small nods down at the wrist",
+        "orientation": "Facing forward, the front of the fist"
+      },
+      "fixes": {
+        "handshape": "Close your hand into a fist, thumb across your fingers.",
+        "location": {
+          "default": "Hold your fist in front of your shoulder.",
+          "higher": "Raise your fist to about shoulder height.",
+          "lower": "Lower your fist to about shoulder height.",
+          "closer": "Bring your fist in, in front of your shoulder."
+        },
+        "movement": {
+          "default": "Nod your fist down at the wrist, twice.",
+          "bigger": "Make the nods a little bigger at the wrist.",
+          "smaller": "Smaller nods, with your arm still.",
+          "direction": "Nod in one spot, down and up at the wrist.",
+          "repeat": "Nod twice, like a head nodding yes.",
+          "once": "Keep your arm still and just nod your fist at the wrist."
+        },
+        "orientation": "Turn your fist so its palm side faces forward."
+      },
+      "commonMistakes": [
+        "Pumping the whole arm up and down instead of bending the wrist.",
+        "Shaking the fist side to side.",
+        "Opening the hand while nodding.",
+        "Tucking the thumb inside the fist."
+      ],
+      "variants": "A single nod or quick repeated nods are also seen, and an emphatic yes can be fingerspelled. This lesson teaches two nods, as most of PopSign's signers made it.",
+      "popsignForm": "All 3 clips: an S fist held in front of the shoulder at about chin height, palm side toward the camera, nodding down at the wrist two or three times (wrist pitch dips of about 10-35 degrees) while the arm stays still. Templates (506 clips, 31 signers): median 2 wrist nods, hand above the shoulder line and below the mouth.",
+      "aslLex": "G_03_074: S hand, neutral space, straight movement, repeated, no contact.",
+      "sources": [
+        "https://www.lifeprint.com/asl101/pages-signs/y/yes.htm",
+        "https://www.handspeak.com/word/2443/",
+        "https://aslsignbank.com/dictionary/gloss/1472.html",
+        "https://asl-lex.org/"
+      ]
+    },
+    "no": {
+      "english": "No",
+      "gloss": "NO",
+      "howTo": "In front of your shoulder, hold your index and middle fingers out together with your thumb, then snap the two fingers down onto your thumb.",
+      "tip": "It began as spelling N-O, squeezed into one quick snap.",
+      "parts": {
+        "handshape": "Index and middle fingers together with the thumb, closing onto it",
+        "location": "In front of your shoulder",
+        "movement": "One quick snap of the two fingers onto the thumb",
+        "orientation": "Facing forward"
+      },
+      "fixes": {
+        "handshape": "Use your index and middle fingers together, with your thumb.",
+        "location": {
+          "default": "Hold your hand in front of your shoulder.",
+          "higher": "Raise your hand to about shoulder height.",
+          "lower": "Lower your hand to about shoulder height.",
+          "closer": "Bring your hand in, in front of your shoulder."
+        },
+        "movement": {
+          "default": "Snap your two fingers down onto your thumb.",
+          "bigger": "Open your fingers wide first, then snap them shut.",
+          "smaller": "Keep it small, so only your fingers move.",
+          "direction": "Keep your hand in place and just snap your fingers shut.",
+          "repeat": "Close your two fingers all the way onto your thumb.",
+          "once": "One quick snap is enough."
+        },
+        "orientation": "Turn your palm to face forward."
+      },
+      "commonMistakes": [
+        "Using only the index finger instead of two fingers together.",
+        "Spreading the two fingers apart into a V.",
+        "Moving the whole hand instead of just snapping the fingers.",
+        "Snapping at the mouth, which looks like DUCK."
+      ],
+      "variants": "One firm snap is a plain no; a double snap sounds softer, and small gentle repeats mean no, no, no. Shaking your head along with it is natural. This lesson teaches the single snap PopSign's signers made; a double snap is also correct ASL.",
+      "popsignForm": "All 3 clips: index and middle fingers together with the thumb out, palm forward, in front of the shoulder at about chin height; the two fingers close onto the thumb once and the closed hand is held for about 0.3-0.4 s. Templates (465 clips, 31 signers): median 1 snap (90th percentile 2), no wrist nods.",
+      "aslLex": "C_03_041: flat H (index and middle, thumb open), a handshape change only, neutral space, repeated, no contact.",
+      "sources": [
+        "https://www.handspeak.com/word/1496/",
+        "https://www.lifeprint.com/asl101/pages-signs/n/no.htm",
+        "https://aslsignbank.com/dictionary/gloss/512.html",
+        "https://asl-lex.org/"
+      ]
+    },
+    "please": {
+      "english": "Please",
+      "gloss": "PLEASE",
+      "howTo": "Lay your flat hand on the middle of your chest and rub it around in a circle, once or twice.",
+      "tip": "The same sign means pleasure: a pleased rub of the chest.",
+      "parts": {
+        "handshape": "Flat, thumb relaxed out",
+        "location": "Middle of your chest, palm touching",
+        "movement": "One or two circles: up the outside, in across the top",
+        "orientation": "On your chest, fingers pointing across"
+      },
+      "fixes": {
+        "handshape": "Keep your hand flat, fingers together.",
+        "location": {
+          "default": "Place your hand flat on the middle of your chest.",
+          "higher": "Move your hand up to your upper chest.",
+          "lower": "Move your hand down onto your chest.",
+          "closer": "Move your hand in toward the middle of your chest.",
+          "touch": "Keep your palm touching your chest as you circle."
+        },
+        "movement": {
+          "default": "Rub one or two smooth circles on your chest.",
+          "bigger": "Make your circle a little bigger, about palm-sized.",
+          "smaller": "Keep the circle small, on your chest.",
+          "direction": "Circle in one spot, without sliding across or down.",
+          "repeat": "Keep rubbing all the way around the circle.",
+          "once": "Keep your hand flat and steady as it circles."
+        },
+        "orientation": "Turn your palm in to face your chest."
+      },
+      "commonMistakes": [
+        "Circling in the air in front of the chest instead of on it.",
+        "Using a fist, which makes SORRY.",
+        "Patting the chest instead of circling.",
+        "Making big, fast circles across the whole chest."
+      ],
+      "variants": "PopSign's signers sometimes made a single circle, and a few circled the other way. With both hands it means ENJOY, and a firm, insistent please uses a brief rub instead of a circle.",
+      "popsignForm": "All 3 clips: a flat hand with the thumb out, palm on the upper chest a little to the signing side of centre, fingers pointing across the body, rubbing 1.3-1.8 circles. Direction: across the top toward the middle, down, out along the bottom, up the outside (clockwise as you look at a right-handed signer, as Lifeprint describes it). Over all asl-signs clips of PLEASE, 31 of 31 signers mostly circled this way (95 % of 267 train and 99 % of 151 test clips with a clear circle), median 1.6 circles. Templates (524 clips): median 1.4 circles.",
+      "aslLex": "B_02_007: open B (thumb open), upper torso, circular, repeated, contact.",
+      "sources": [
+        "https://www.lifeprint.com/asl101/pages-signs/p/please.htm",
+        "https://www.handspeak.com/word/1658/",
+        "https://aslsignbank.com/dictionary/gloss/527.html",
+        "https://asl-lex.org/"
+      ]
+    },
+    "thankyou": {
+      "english": "Thank you",
+      "gloss": "THANK-YOU",
+      "howTo": "Touch the fingertips of your flat hand to your chin, then move your hand forward and down toward the person, ending palm up.",
+      "tip": "Send your thanks from your mouth to the other person.",
+      "parts": {
+        "handshape": "Flat, fingers together",
+        "location": "Fingertips at your chin, just below your lips",
+        "movement": "Forward and down, toward the person, once",
+        "orientation": "Toward you, turning up as you move"
+      },
+      "fixes": {
+        "handshape": "Keep your hand flat, fingers straight and together.",
+        "location": {
+          "default": "Start with your fingertips at your chin.",
+          "higher": "Start higher, with your fingertips at your chin.",
+          "lower": "Start a little lower, at your chin, not your nose.",
+          "closer": "Start at the middle of your chin.",
+          "touch": "Touch your chin with your fingertips first."
+        },
+        "movement": {
+          "default": "Move your hand forward and down, toward the person.",
+          "bigger": "Bring your hand farther forward, toward the person.",
+          "smaller": "A short move forward is enough.",
+          "direction": "Move forward and a little down, not sideways or straight down.",
+          "once": "One smooth move away from your chin."
+        },
+        "orientation": "Turn your palm up as your hand moves away."
+      },
+      "commonMistakes": [
+        "Starting at the cheek or nose instead of the chin.",
+        "Turning the palm down at the end, which looks like BAD.",
+        "Dropping the hand straight down instead of moving it forward.",
+        "Moving away without touching the chin first."
+      ],
+      "variants": "Starting at the lips is also common, and using both hands makes a bigger thank you. This lesson checks the one-handed sign.",
+      "popsignForm": "All 3 clips: a flat hand, palm in, fingertips at the lips or chin, then forward and down to about chest height, ending palm up; one signer held the hand at the mouth for about 0.75 s before moving. Templates (450 clips, 29 signers): fingertips start about 0.14 shoulder widths below the mouth and the hand moves down about 0.1 shoulder widths (most of the forward move is toward the camera, unseen in 2-D).",
+      "aslLex": "H_02_053: open B, mouth, curved movement away from the head, contact, not repeated.",
+      "sources": [
+        "https://www.handspeak.com/word/2186/",
+        "https://www.lifeprint.com/asl101/pages-signs/t/thankyou.htm",
+        "https://aslsignbank.com/dictionary/gloss/1198.html",
+        "https://asl-lex.org/"
+      ]
+    },
+    "water": {
+      "english": "Water",
+      "gloss": "WATER",
+      "howTo": "Make a W with your index, middle and ring fingers and tap your index finger on your chin, twice.",
+      "tip": "W for water, tapped where you drink.",
+      "parts": {
+        "handshape": "W: three fingers up and apart, thumb holding the pinky",
+        "location": "Chin, just below your lower lip",
+        "movement": "Two small taps of the index finger",
+        "orientation": "Facing sideways, across your body"
+      },
+      "fixes": {
+        "handshape": "Make a W: three fingers up and apart, thumb on your pinky.",
+        "location": {
+          "default": "Tap at your chin, just below your lip.",
+          "higher": "Move your hand up to your chin.",
+          "lower": "Bring your hand down to your chin.",
+          "closer": "Bring your hand in to the middle of your chin.",
+          "touch": "Let your index finger touch your chin."
+        },
+        "movement": {
+          "default": "Tap your chin twice with your index finger.",
+          "bigger": "Lift your finger slightly off your chin between taps.",
+          "smaller": "Keep the taps small, right at your chin.",
+          "direction": "Keep tapping at your chin, without sliding away.",
+          "repeat": "Tap twice, not just once.",
+          "once": "Keep the W shape steady while you tap."
+        },
+        "orientation": "Turn your palm to face sideways, across your body."
+      },
+      "commonMistakes": [
+        "Holding up only two fingers, a V, instead of three.",
+        "Pointing the fingers forward instead of up.",
+        "Holding the W in front of the chin without touching it.",
+        "Tapping many times, fast."
+      ],
+      "variants": "Some signers tap at the lips, and some touch the chin just once; both are understood.",
+      "popsignForm": "All 3 clips: a W hand, fingers up, palm facing across the body, the index finger at the chin just below the lower lip for about half a second. One signer made about three small taps (about 4 cm); the other two barely moved (a touch held, or taps too small to see in 2-D). Templates (520 clips, 31 signers): fingertips about 0.12 shoulder widths from the mouth, median 2 turn-backs of the palm.",
+      "aslLex": "A_02_031: W hand, chin, straight movement, repeated, contact.",
+      "sources": [
+        "https://www.handspeak.com/word/2360/",
+        "https://www.lifeprint.com/asl101/pages-signs/w/water.htm",
+        "https://aslsignbank.com/dictionary/gloss/1414.html",
+        "https://asl-lex.org/"
+      ]
+    },
+    "bye": {
+      "english": "Bye",
+      "gloss": "BYE",
+      "howTo": "Hold up an open hand in front of your shoulder, palm out, and fold your fingers down and up at the knuckles, two or three times.",
+      "tip": "A small bye-bye where only the fingers fold.",
+      "parts": {
+        "handshape": "Open, fingers straight",
+        "location": "Up in front of your shoulder, at face height",
+        "movement": "Fingers fold down and up at the knuckles, two or three times",
+        "orientation": "Facing forward, toward the person"
+      },
+      "fixes": {
+        "handshape": "Open your hand, fingers straight, before folding them.",
+        "location": {
+          "default": "Hold your hand up in front of your shoulder.",
+          "higher": "Raise your hand to about face height.",
+          "lower": "Lower your hand a little, to about chin height.",
+          "closer": "Bring your hand in, in front of your shoulder."
+        },
+        "movement": {
+          "default": "Fold your fingers down and up, two or three times.",
+          "bigger": "Fold your fingers all the way down, then open.",
+          "smaller": "Keep it small, so just your fingers move.",
+          "direction": "Keep your hand in one place while your fingers fold.",
+          "repeat": "Fold your fingers down and up again.",
+          "once": "Keep your arm still; only your fingers fold."
+        },
+        "orientation": "Turn your palm to face forward, toward the person."
+      },
+      "commonMistakes": [
+        "Swinging the whole arm side to side.",
+        "Palm facing you instead of the person.",
+        "Squeezing the fingers into a fist.",
+        "Holding the hand low, at the chest."
+      ],
+      "variants": "Bending the whole hand at the wrist is also a common goodbye, while a side-to-side wave is more often a hello. This lesson checks the knuckle fold that PopSign's signers used.",
+      "popsignForm": "All 3 clips: an open hand raised in front of the shoulder at face height, palm forward, the fingers folding down at the large knuckles and back up two or three times (two signers folded them toward the thumb), with almost no sideways travel; nobody waved side to side. Templates (533 clips, 31 signers): median 2 open-close turn-backs of the fingers and 1 turn-back of the palm's path (the hand coming up and going down).",
+      "aslLex": "E_01_058: 5 hand with a change in finger flexion, neutral space, no path movement, repeated, no contact.",
+      "sources": [
+        "https://www.lifeprint.com/asl101/pages-signs/g/goodbye.htm",
+        "https://aslsignbank.com/dictionary/gloss/425.html",
+        "https://asl-lex.org/"
+      ]
+    }
+  },
+  "neighbours": {
+    "hello": ["will", "penny", "think", "donkey", "blue", "bye"],
+    "yes": ["can", "haveto", "aunt", "potty", "no"],
+    "no": ["duck", "bird", "TV", "yes"],
+    "please": ["minemy", "happy", "like", "fine", "hungry"],
+    "thankyou": ["bad", "taste", "wet", "quiet", "napkin"],
+    "water": ["talk", "shhh", "mom", "cute", "taste"],
+    "bye": ["hello", "blue", "finish", "yellow"]
+  },
+  "neighboursWhy": "Signs a miss may be named as (\"That looked like X\") even before the learner has met them: each shares hand shape, place or movement with the lesson sign in the form PopSign's signers used (ASL-LEX phonology), and each is backed by at least one of: a short distance between the two signs' median place / hand shape / movement profiles over the 10 unseen asl-signs test signers, or an early 4-epoch model's confusions (PLEASE as MY, THANK-YOU as TASTE, NO as BIRD, HELLO as BYE). Replace with run A's confusion matrix once it exists.",
+  "glosses": {
+    "will": "WILL",
+    "penny": "PENNY",
+    "think": "THINK",
+    "donkey": "DONKEY",
+    "blue": "BLUE",
+    "can": "CAN",
+    "haveto": "HAVE-TO",
+    "aunt": "AUNT",
+    "potty": "POTTY",
+    "duck": "DUCK",
+    "bird": "BIRD",
+    "TV": "TV",
+    "minemy": "MY",
+    "happy": "HAPPY",
+    "like": "LIKE",
+    "fine": "FINE",
+    "hungry": "HUNGRY",
+    "bad": "BAD",
+    "taste": "TASTE",
+    "wet": "WET",
+    "quiet": "QUIET",
+    "napkin": "NAPKIN",
+    "talk": "TALK",
+    "shhh": "SHH",
+    "mom": "MOM",
+    "cute": "CUTE",
+    "finish": "FINISH",
+    "yellow": "YELLOW",
+    "callonphone": "CALL-ON-PHONE",
+    "frenchfries": "FRENCH-FRIES",
+    "glasswindow": "GLASS-WINDOW",
+    "hesheit": "HE-SHE-IT",
+    "icecream": "ICE-CREAM",
+    "weus": "WE"
+  }
+}

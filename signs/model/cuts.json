@@ -1,0 +1,160 @@
+{
+ "version": 1,
+ "source": "run A on the 10 CC0 test signers",
+ "far_accept": 0.005,
+ "far_lesson": 0.02,
+ "report": [
+  {
+   "sign": "hello",
+   "n_pos": 158,
+   "top1": 0.823,
+   "accept_cut": 0.018,
+   "pass_rate": 0.975,
+   "worst_signer_pass": 0.778,
+   "far_all": 0.005,
+   "worst_lesson_confusion": [
+    "bye",
+    0.05844155844155844
+   ]
+  },
+  {
+   "sign": "yes",
+   "n_pos": 161,
+   "top1": 0.77,
+   "accept_cut": 0.026,
+   "pass_rate": 0.894,
+   "worst_signer_pass": 0.556,
+   "far_all": 0.005,
+   "worst_lesson_confusion": [
+    "please",
+    0.005780346820809248
+   ]
+  },
+  {
+   "sign": "no",
+   "n_pos": 154,
+   "top1": 0.903,
+   "accept_cut": 0.01,
+   "pass_rate": 0.968,
+   "worst_signer_pass": 0.75,
+   "far_all": 0.005,
+   "worst_lesson_confusion": [
+    "bye",
+    0.025974025974025976
+   ]
+  },
+  {
+   "sign": "please",
+   "n_pos": 173,
+   "top1": 0.954,
+   "accept_cut": 0.008,
+   "pass_rate": 0.988,
+   "worst_signer_pass": 0.944,
+   "far_all": 0.005,
+   "worst_lesson_confusion": [
+    "yes",
+    0.006211180124223602
+   ]
+  },
+  {
+   "sign": "thankyou",
+   "n_pos": 138,
+   "top1": 0.949,
+   "accept_cut": 0.013,
+   "pass_rate": 0.986,
+   "worst_signer_pass": 0.923,
+   "far_all": 0.005,
+   "worst_lesson_confusion": [
+    "please",
+    0.005780346820809248
+   ]
+  },
+  {
+   "sign": "water",
+   "n_pos": 156,
+   "top1": 0.955,
+   "accept_cut": 0.01,
+   "pass_rate": 0.994,
+   "worst_signer_pass": 0.941,
+   "far_all": 0.005,
+   "worst_lesson_confusion": [
+    "hello",
+    0.0189873417721519
+   ]
+  },
+  {
+   "sign": "bye",
+   "n_pos": 154,
+   "top1": 0.916,
+   "accept_cut": 0.018,
+   "pass_rate": 0.955,
+   "worst_signer_pass": 0.75,
+   "far_all": 0.005,
+   "worst_lesson_confusion": [
+    "hello",
+    0.04430379746835443
+   ]
+  }
+ ],
+ "calibrated": {
+  "hello": {
+   "accept": 0.0177,
+   "high": 0.5005
+  },
+  "yes": {
+   "accept": 0.0263,
+   "high": 0.3018
+  },
+  "no": {
+   "accept": 0.0101,
+   "high": 0.1182
+  },
+  "please": {
+   "accept": 0.0084,
+   "high": 0.1208
+  },
+  "thankyou": {
+   "accept": 0.0126,
+   "high": 0.1819
+  },
+  "water": {
+   "accept": 0.0099,
+   "high": 0.1119
+  },
+  "bye": {
+   "accept": 0.0181,
+   "high": 0.2727
+  }
+ },
+ "cuts": {
+  "hello": {
+   "accept": 0.3,
+   "high": 0.6
+  },
+  "yes": {
+   "accept": 0.3,
+   "high": 0.6
+  },
+  "no": {
+   "accept": 0.3,
+   "high": 0.6
+  },
+  "please": {
+   "accept": 0.3,
+   "high": 0.6
+  },
+  "thankyou": {
+   "accept": 0.3,
+   "high": 0.6
+  },
+  "water": {
+   "accept": 0.3,
+   "high": 0.6
+  },
+  "bye": {
+   "accept": 0.3,
+   "high": 0.6
+  }
+ },
+ "why": "The data cut-offs (false accepts <= 0.5% against every other sign on the 10 unseen signers) come out at 0.01-0.03 because those negatives are all clean signs; live windows also hold hands rising, half signs and rests, which the test set does not. 0.30 keeps false accepts on the unseen signers at or under 0.05% (0.2% against the other lesson signs) and passes 75-95% of their real signs; 0.60 accepts at once."
+}
