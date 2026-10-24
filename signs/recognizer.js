@@ -93,6 +93,10 @@ export const RECOGNIZER_DEFAULTS = Object.freeze({
   maxWindowMs: 4000,      // a try's whole window keeps at most its last 4 s
   hintMs: 8000,
   looksLikeMin: 0.6,      // "That looked like X" only when the model gives X this much (docs/signs-design.md)
+  acceptOnChecks: true,   // a try whose hand shape, place and movement are all within the signers' range passes,
+                          // unless the model gives another sign looksLikeMin or more (the owner, 24 Oct: "when all 3 of
+                          // these things are green it should just pass")
+  checksTopK: 5,          // ... and only when the model has the sign among its first 5 of the 250
   shoulderPerPalm: 2.75,  // the speed unit without shoulders: shoulder widths per palm length (wrist to middle knuckle)
   bufferMs: 8000,
   errorEveryMs: 3000,
@@ -411,13 +415,37 @@ export function createRecognizer({ runner, featuresFn, labels, cuts = {}, hand =
         } catch (err) { console.warn(`recognizer: feedbackFn threw (${err?.message || err})`); }
         if (g !== gen || a !== attempt) return;
       }
+      // all three parts green and no other sign the model is sure of: the sign was made (the model alone can miss a
+      // learner's sign that is within fluent signers' range on every part; a green checklist under "Not quite" is a
+      // contradiction the learner cannot act on)
+      const c = feedback?.checks;
+      if (o.acceptOnChecks && c && c.handshape === true && c.location === true && c.movement === true) {
+        let other = 0, above = 0;
+        for (let i = 0; i < labels.length; i++) {
+          if (i === signIdx || i === noneIndex) continue;
+          if (probs[i] > other) other = probs[i];
+          if (probs[i] > probs[signIdx]) above++;
+        }
+        // and the model has the sign among its first checksTopK: a try the model is sure is something else is not
+        // passed on the checks alone (TALK passed WATER's checks with WATER at 0.00)
+        if (other < o.looksLikeMin && above < o.checksTopK) {
+          stats.acceptsByChecks = (stats.acceptsByChecks ?? 0) + 1;
+          accept(a, best?.p ?? 0, false, lastM?.t ?? now(), true);
+          return;
+        }
+      }
+      // the parts all looked right but the model is sure it was not the sign: three green checks under "Not quite"
+      // would contradict each other, so the checks are left out and the learner is sent back to the video
+      if (c && c.handshape === true && c.location === true && c.movement === true) {
+        feedback = { ...feedback, text: "Almost! Watch it once more, then sign it just like the video.", checks: { handshape: null, location: null, movement: null }, part: null };
+      }
       stats.misses++;
       endAttempt(a);
       emit({ type: "miss", sign, index: idx, confidence: best?.p ?? 0, ...looksLike(probs, signIdx), top: top3(probs), feedback: feedback ?? null });
     }
     if (a.tDetect !== undefined) keep(stats.verdictMs, now() - a.tDetect);
   }
-  function accept(a, p, early, tAt) {
+  function accept(a, p, early, tAt, byChecks = false) {
     const i = idx, sign = signAt(i);
     stats.accepts++;
     if (early) stats.earlyAccepts++;
@@ -425,7 +453,7 @@ export function createRecognizer({ runner, featuresFn, labels, cuts = {}, hand =
     if (!isSeq()) {
       done = true;
       if (a) { a.state = "done"; attempt = null; }
-      emit({ type: "accept", sign, index: i, confidence: p, early });
+      emit({ type: "accept", sign, index: i, confidence: p, early, byChecks });
       return;
     }
     fence = tAt;
@@ -443,7 +471,7 @@ export function createRecognizer({ runner, featuresFn, labels, cuts = {}, hand =
     }
     // a listener may set the next target from inside the accept: then this one's sequence-done is not said
     const g = gen, finished = done, signs = [...target.signs];
-    emit({ type: "accept", sign, index: i, confidence: p, early });
+    emit({ type: "accept", sign, index: i, confidence: p, early, byChecks });
     if (finished && g === gen) emit({ type: "sequence-done", signs });
   }
 
