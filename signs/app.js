@@ -174,13 +174,24 @@ const englishOf = (id) => signOf(id).english ?? String(id);
 const TOTAL_STEPS = () => LESSON.signs.length + LESSON.conversation.length;
 
 /* ---- demonstrations ------------------------------------------------------------------------------------------- */
-/* On this Mac only: PopSign's clips (signs/local, git-ignored), mirrored when the signer used the other hand. */
+/* Real Deaf signers' PopSign clips (CC BY 4.0), mirrored when the signer used the other hand: the lesson's signs as
+ * published with the site (signs/media/popsign, tools/build-signs-site.sh; the owner, 24 Oct: "i wanted to see those
+ * not these animations"), and on this Mac every sign (signs/local, git-ignored). */
 const LOCAL = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
-let localClips = null;
-const localReady = !LOCAL ? Promise.resolve(null) : fetchJson(new URL("local/popsign/manifest.json", import.meta.url)).then((m) => {
+let localClips = null, clipsOnThisComputer = false;
+const localReady = (async () => {
+  for (const base of LOCAL ? ["local/popsign", "media/popsign"] : ["media/popsign"]) {
+    try {
+      const m = await fetchJson(new URL(`${base}/manifest.json`, import.meta.url));
+      clipsOnThisComputer = base.startsWith("local");
+      return [m, base];
+    } catch { /* the next place, or no clips */ }
+  }
+  throw new Error("no clips");
+})().then(([m, base]) => {
   localClips = new Map();
   for (const s of m.signs ?? []) {
-    const clips = (s.clips ?? []).map((c) => ({ ...c, url: new URL(`local/popsign/${c.file}`, import.meta.url).href }));
+    const clips = (s.clips ?? []).map((c) => ({ ...c, url: new URL(`${base}/${c.file}`, import.meta.url).href }));
     // the learner's own hand first (those play as they were filmed), then the clips of the demo frame's own 3:4 shape
     const shapeOff = (c) => (c.w > 0 && c.h > 0 ? Math.abs(c.w / c.h - 0.75) : 1);
     clips.sort((a, b) => ((a.hand === HAND ? 0 : 1) - (b.hand === HAND ? 0 : 1)) || shapeOff(a) - shapeOff(b));
@@ -694,7 +705,7 @@ function showWatch(id, i, mode = "first") {
     $("#btn-signer").hidden = d.kind !== "video" || (localClips?.get(id)?.length ?? 0) < 2;
     $("#btn-play").hidden = !d.still?.();
     credit.hidden = d.kind === "placeholder";
-    credit.textContent = d.kind === "video" ? `${CREDIT.video} Shown on this computer only.` : d.kind === "avatar" ? CREDIT.avatar : "";
+    credit.textContent = d.kind === "video" ? `${CREDIT.video}${clipsOnThisComputer ? " Shown on this computer only." : ""}` : d.kind === "avatar" ? CREDIT.avatar : "";
   };
   mount();
   watchEl.hidden = false;

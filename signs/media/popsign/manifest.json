@@ -1,0 +1,293 @@
+{
+ "schema": 1,
+ "localOnly": false,
+ "source": {
+  "name": "PopSign ASL v1.0",
+  "license": "CC BY 4.0",
+  "attribution": "Sign videos: PopSign ASL v1.0 (Starner et al., 2023), https://signdata.cc.gatech.edu/view/datasets/popsign_v1_0/, licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Clips were trimmed, scaled and re-encoded.",
+  "url": "https://signdata.cc.gatech.edu/view/datasets/popsign_v1_0/"
+ },
+ "signs": [
+  {
+   "id": "hello",
+   "entry_id": "hello",
+   "display": "HELLO",
+   "english": "hello",
+   "hands": "one",
+   "teachable": true,
+   "clips": [
+    {
+     "file": "clips/hello-1.mp4",
+     "signer": "gtsignstudy4a.8039",
+     "hand": "right",
+     "ms": 1400,
+     "w": 360,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/hello-2.mp4",
+     "signer": "gtsignstudy4a.7042",
+     "hand": "left",
+     "ms": 1500,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/hello-3.mp4",
+     "signer": "4a.8014",
+     "hand": "right",
+     "ms": 1433,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    }
+   ]
+  },
+  {
+   "id": "bye",
+   "entry_id": "bye",
+   "display": "BYE",
+   "english": "bye",
+   "hands": "one",
+   "teachable": true,
+   "clips": [
+    {
+     "file": "clips/bye-1.mp4",
+     "signer": "4a.8030",
+     "hand": "right",
+     "ms": 1133,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/bye-2.mp4",
+     "signer": "gtsignstudy4a.8039",
+     "hand": "right",
+     "ms": 1600,
+     "w": 360,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/bye-3.mp4",
+     "signer": "gtsignstudy4a.8036",
+     "hand": "left",
+     "ms": 1633,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    }
+   ]
+  },
+  {
+   "id": "yes",
+   "entry_id": "yes",
+   "display": "YES",
+   "english": "yes",
+   "hands": "one",
+   "teachable": true,
+   "clips": [
+    {
+     "file": "clips/yes-1.mp4",
+     "signer": "4a.7005",
+     "hand": "left",
+     "ms": 1433,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/yes-2.mp4",
+     "signer": "4a.8054",
+     "hand": "right",
+     "ms": 1200,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/yes-3.mp4",
+     "signer": "4a.8019",
+     "hand": "right",
+     "ms": 1400,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    }
+   ]
+  },
+  {
+   "id": "no",
+   "entry_id": "no",
+   "display": "NO",
+   "english": "no",
+   "hands": "one",
+   "teachable": true,
+   "clips": [
+    {
+     "file": "clips/no-1.mp4",
+     "signer": "gtsignstudy4a.8033",
+     "hand": "right",
+     "ms": 1367,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/no-2.mp4",
+     "signer": "4a.8012",
+     "hand": "right",
+     "ms": 1067,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/no-3.mp4",
+     "signer": "gtsignstudy4a.7041",
+     "hand": "left",
+     "ms": 1500,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    }
+   ]
+  },
+  {
+   "id": "thankyou",
+   "entry_id": "thank_you",
+   "display": "THANK-YOU",
+   "english": "thank you",
+   "hands": "one",
+   "teachable": true,
+   "clips": [
+    {
+     "file": "clips/thankyou-1.mp4",
+     "signer": "4a.8014",
+     "hand": "right",
+     "ms": 1533,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/thankyou-2.mp4",
+     "signer": "4a.8022",
+     "hand": "right",
+     "ms": 900,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/thankyou-3.mp4",
+     "signer": "4a.8030",
+     "hand": "right",
+     "ms": 1333,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    }
+   ]
+  },
+  {
+   "id": "please",
+   "entry_id": "please",
+   "display": "PLEASE",
+   "english": "please",
+   "hands": "one",
+   "teachable": true,
+   "clips": [
+    {
+     "file": "clips/please-1.mp4",
+     "signer": "4a.6001",
+     "hand": "right",
+     "ms": 1233,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/please-2.mp4",
+     "signer": "4a.8027",
+     "hand": "right",
+     "ms": 1333,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/please-3.mp4",
+     "signer": "gtsignstudy4a.8035",
+     "hand": "left",
+     "ms": 1267,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    }
+   ]
+  },
+  {
+   "id": "water",
+   "entry_id": "water",
+   "display": "WATER",
+   "english": "water",
+   "hands": "one",
+   "teachable": true,
+   "clips": [
+    {
+     "file": "clips/water-1.mp4",
+     "signer": "gtsignstudy4a.7042",
+     "hand": "right",
+     "ms": 1300,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/water-2.mp4",
+     "signer": "gtsignstudy4a.8033",
+     "hand": "right",
+     "ms": 1333,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    },
+    {
+     "file": "clips/water-3.mp4",
+     "signer": "gtsignstudy4a.8044",
+     "hand": "right",
+     "ms": 1300,
+     "w": 480,
+     "h": 640,
+     "fps": 30,
+     "handFrames": 1.0
+    }
+   ]
+  }
+ ],
+ "published": "the lesson signs only, with the site (owner, 2026-10-24)"
+}
