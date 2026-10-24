@@ -13,14 +13,15 @@
  * The parts:
  *   signs/capture.js       the camera, HandLandmarker + PoseLandmarker, frame records, the drawing
  *   the recognizer         signs/recognizer.js's events (attempt-start, progress, accept, sequence-done, miss, unclear,
- *                          hint); the mock for now, behind ONE import below
+ *                          hint); the mock only with ?mock=, behind ONE import below
  *   signs/lesson.js        the lesson: its signs and the conversation's turns
  *   signs/content.json     each sign's words: meaning, how to make it, a tip, its parts, the corrections
- *   signs/avatar.js        the line-art signer that shows each sign (signs/model/demos/<id>.json)
- * lesson.js, content.json and avatar.js are written alongside this file; until they are in, the lesson runs on the
- * stub below and the demonstration is a calm placeholder. On this Mac only (localhost), PopSign's own clips can be
- * shown instead (signs/local -> ~/Projects/handful-local-media, never committed or published: the signers consented to
- * research, not to a product).
+ *   the demonstrations     real Deaf signers' PopSign clips of each sign (CC BY 4.0, credited under the clip): the
+ *                          lesson's signs published with the site (signs/media/popsign, tools/build-signs-site.sh), and
+ *                          on this Mac every sign (signs/local -> ~/Projects/handful-local-media, never committed)
+ * Until lesson.js and content.json are in, the lesson runs on the stub below; a sign with no clip shows its name on a
+ * plain tile. (The drawn signer that stood in for the clips is gone: the owner, 24 Oct, "remove that drawing version
+ * completely ... just keep the actual videos".)
  *
  * URL: ?hand=left (sign with the left hand), ?mock=auto (the mock accepts ~2 s of movement; &mockmiss=N: the first N
  *      tries of each sign are misses), ?fps=1 (frame rate and per-frame cost on the camera view), ?autostart=1 (past
@@ -43,7 +44,6 @@ const MOCK = recognition.MOCK === true;
 const MOCK_MODE = params.get("mock") === "auto" ? "auto" : "keys";
 let PARTNER = "Maya";
 const SOUND_KEY = "signs-sound";
-const SOURCE_KEY = "signs-demo-source";
 const AUTOSTART_KEY = "signs-autostart";
 if (HAND === "left") document.documentElement.classList.add("hand-left");
 
@@ -143,9 +143,8 @@ async function fetchJson(url) {
   if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`);
   return res.json();
 }
-/* The credits the demonstrations' licence asks for (signs/lesson.js has the words; these until it is in). */
+/* The credit the clips' licence asks for (signs/lesson.js has the words; these until it is in). */
 let CREDIT = {
-  avatar: "Sign motion from PopSign ASL v1.0 (Starner et al., 2023), CC BY 4.0.",
   video: "Sign videos: PopSign ASL v1.0 (Starner et al., 2023), CC BY 4.0. Clips were trimmed, scaled and re-encoded.",
 };
 let lessonModule = null;
@@ -158,7 +157,6 @@ const contentReady = (async () => {
   const lesson = mod?.LESSON ?? mod?.default ?? null;
   if (usableLesson(lesson)) LESSON = lesson; else stats.stub.push("lesson");
   if (typeof LESSON.partner?.name === "string" && LESSON.partner.name) PARTNER = LESSON.partner.name;
-  if (typeof mod?.ATTRIBUTION === "string") CREDIT.avatar = mod.ATTRIBUTION;
   if (typeof mod?.ATTRIBUTION_VIDEO === "string") CREDIT.video = mod.ATTRIBUTION_VIDEO;
   if (content?.signs && typeof content.signs === "object") {
     // a sign content.json leaves out keeps the stub's words rather than none
@@ -171,6 +169,13 @@ const signOf = (id) => CONTENT.signs?.[id] ?? STUB_CONTENT.signs[id] ?? {};
  * labels a miss may be named as), then the label in capitals. */
 const glossOf = (id) => CONTENT.signs?.[id]?.gloss ?? CONTENT.glosses?.[id] ?? STUB_CONTENT.signs[id]?.gloss ?? String(id).toUpperCase();
 const englishOf = (id) => signOf(id).english ?? String(id);
+/* What a sign means, where its name does not say it already (HELLO is "hello", THANK-YOU "thank you"): shown under the
+ * name only then. */
+function meaningOf(id) {
+  const plain = (s) => String(s).toLowerCase().replace(/[^a-z]/g, "");
+  const e = englishOf(id);
+  return plain(e) === plain(glossOf(id)) ? "" : e;
+}
 const TOTAL_STEPS = () => LESSON.signs.length + LESSON.conversation.length;
 
 /* ---- demonstrations ------------------------------------------------------------------------------------------- */
@@ -199,53 +204,23 @@ const localReady = (async () => {
   }
   return localClips;
 }).catch(() => null);
-/* The line-art signer (signs/avatar.js) moved by each sign's motion (signs/model/demos/<id>.json). The lesson's signs
- * share one framing (avatar.js unionView), so the figure does not grow and shrink from sign to sign. */
-let avatarMod;
-async function avatarModule() {
-  if (avatarMod !== undefined) return avatarMod;
-  try {
-    const m = await import("./avatar.js");
-    avatarMod = typeof m.createAvatar === "function" && typeof m.loadDemo === "function" ? m : null;
-  } catch { avatarMod = null; }
-  return avatarMod;
-}
-const demoData = new Map();
-function demoOf(mod, id) {
-  if (!demoData.has(id)) demoData.set(id, mod.loadDemo(new URL(`model/demos/${id}.json`, import.meta.url).href).catch(() => null));
-  return demoData.get(id);
-}
-let lessonView;
-async function lessonFraming(mod) {
-  if (lessonView !== undefined) return lessonView;
-  await contentReady;
-  const demos = (await Promise.all(LESSON.signs.map((id) => demoOf(mod, id)))).filter(Boolean);
-  try { lessonView = demos.length && typeof mod.unionView === "function" ? mod.unionView(demos) : null; } catch { lessonView = null; }
-  return lessonView;
-}
-let demoPref = (() => { try { return localStorage.getItem(SOURCE_KEY) === "avatar" ? "avatar" : "video"; } catch { return "video"; } })();
 const clipTurn = new Map();
 const HAND_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12m0-1V4a1.5 1.5 0 0 1 3 0v7m0-.5V5.5a1.5 1.5 0 0 1 3 0V14c0 4-2.5 7-6.5 7S6 18.5 5 16l-1.6-3.3a1.4 1.4 0 0 1 2.4-1.4L8 14"/></svg>`;
 
 /**
- * One demonstration in `box`: the real clip (this Mac only), the line-art signer, or the sign's name on a calm tile.
- * @returns {Promise<{kind: string, setSlow(b: boolean): void, destroy(): void, hasVideo: boolean, hasAvatar: boolean}>}
+ * One demonstration in `box`: a signer's clip, or the sign's name on a plain tile when no clip could be had.
+ * @returns {Promise<{kind: string, setSlow(b: boolean): void, destroy(): void, hasVideo: boolean}>}
  */
 async function mountDemo(box, id, { slow = false, small = false } = {}) {
   const token = String(Math.random());
   box.dataset.token = token;
-  const [clips, mod] = await Promise.all([localReady.then(() => localClips?.get(id) ?? null), avatarModule()]);
-  const [demo, view] = mod ? await Promise.all([demoOf(mod, id), lessonFraming(mod)]) : [null, null];
+  const clips = await localReady.then(() => localClips?.get(id) ?? null);
   const stale = () => box.dataset.token !== token;
-  const hasVideo = !!clips?.length, hasAvatar = !!(mod && demo);
-  const handle = { kind: "placeholder", hasVideo, hasAvatar, setSlow() {}, destroy() {} };
+  const hasVideo = !!clips?.length;
+  const handle = { kind: "placeholder", hasVideo, setSlow() {}, destroy() {} };
   if (stale()) return handle;
   box.replaceChildren();
-  const want = hasVideo && (demoPref === "video" || !hasAvatar) ? "video" : hasAvatar ? "avatar" : "placeholder";
-  // the frame around it takes the demonstration's own background (a video's dark, the drawing's page colour)
-  const frame = box.closest(".demo, .pip");
-  if (frame) frame.dataset.kind = want;
-  if (want === "video") {
+  if (hasVideo) {
     const clip = clips[(clipTurn.get(id) ?? 0) % clips.length];
     const v = document.createElement("video");
     v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.preload = "auto";
@@ -263,27 +238,10 @@ async function mountDemo(box, id, { slow = false, small = false } = {}) {
       setSlow(b) { slowNow = !!b; rate(); },
       destroy() { v.pause(); v.removeAttribute("src"); v.load(); v.remove(); },
     });
-  } else if (want === "avatar") {
-    // avatar.js sizes the canvas to its box itself, and takes its colours from the page's (light or dark)
-    const c = document.createElement("canvas");
-    box.append(c);
-    let a = null;
-    try {
-      // the demonstrations are of right-handed signers: a left-handed learner sees them mirrored
-      a = mod.createAvatar(c, demo, { mirror: HAND === "left", speed: slow ? 0.5 : 1, ...(view ? { view } : {}) });
-    } catch (err) { console.warn("signs: the line-art signer could not start", err); }
-    Object.assign(handle, {
-      kind: "avatar",
-      setSlow(b) { a?.setSpeed?.(b ? 0.5 : 1); },
-      // with reduced motion avatar.js shows the sign's key frame and plays only when asked
-      still: () => !!a?.reducedMotion && !a?.playing,
-      play() { a?.play?.(); },
-      destroy() { try { a?.destroy?.(); } catch { /* gone */ } a = null; c.remove(); },
-    });
   } else {
     const tile = document.createElement("div");
     tile.className = "demo-placeholder";
-    tile.innerHTML = `${HAND_SVG}<b>${esc(glossOf(id))}</b>${small ? "" : "<span>The demonstration is on its way</span>"}`;
+    tile.innerHTML = `${HAND_SVG}<b>${esc(glossOf(id))}</b>${small ? "" : "<span>The video didn't load</span>"}`;
     box.append(tile);
     handle.destroy = () => tile.remove();
   }
@@ -532,8 +490,21 @@ async function renderWelcome() {
   await contentReady;
   if (LESSON.title) $("#welcome-title").textContent = LESSON.title;
   if (LESSON.intro) $("#welcome-lede").textContent = LESSON.intro;
-  $("#sign-row").innerHTML = LESSON.signs.map((id) => `<li>${esc(glossOf(id))}</li>`).join("");
   $("#interlude-title").textContent = `${LESSON.signs.length} signs learned!`;
+}
+/* The welcome's three signers: stills from the lesson's own clips, made with the site (tools/build-signs-site.sh; on
+ * this Mac, tools/signs/make_stills.py into signs/local). A picture that will not load takes the row with it. */
+function heroPictures() {
+  const hero = $("#hero");
+  for (const img of hero.querySelectorAll("img")) {
+    const missing = () => {
+      const local = new URL(`local/popsign/stills/${img.dataset.sign}.jpg`, import.meta.url).href;
+      if (LOCAL && img.src !== local) img.src = local;
+      else hero.hidden = true;
+    };
+    img.addEventListener("error", missing);
+    if (img.complete && !img.naturalWidth) missing();
+  }
 }
 
 /* ---- the camera check ----------------------------------------------------------------------------------------- */
@@ -657,8 +628,8 @@ let watchCard = 0;
 let pipDemo = null;
 let pipSlow = false;
 let pipSign = null;
-/* A sign's parts as a teacher names them (content.json parts): what the miss checklist later refers to. */
-const PART_NAMES = { handshape: "Hand", location: "Place", movement: "Move", orientation: "Palm" };
+/* A sign's parts as a teacher names them (content.json parts), by the names the miss checklist later uses. */
+const PART_NAMES = { handshape: "Hand shape", location: "Place", movement: "Movement", orientation: "Palm" };
 function renderParts(parts) {
   if (!parts || typeof parts !== "object" || Array.isArray(parts)) return "";
   return Object.keys(PART_NAMES).filter((k) => typeof parts[k] === "string" && parts[k])
@@ -674,11 +645,13 @@ function showWatch(id, i, mode = "first") {
   routeFrames = false;
   const s = signOf(id);
   const n = LESSON.signs.length;
-  const eyebrow = $("#watch-step");
-  eyebrow.textContent = mode === "again" ? "Let's watch it slowly" : mode === "rewatch" ? "Watch again" : `New sign · ${i + 1} of ${n}`;
-  eyebrow.classList.toggle("eyebrow-again", mode === "again");
+  const step = $("#watch-step");
+  step.textContent = mode === "again" ? "Let's watch it slowly" : mode === "rewatch" ? "Watch it again" : `Sign ${i + 1} of ${n}`;
+  step.classList.toggle("watch-step-again", mode === "again");
   $("#watch-gloss").textContent = glossOf(id);
-  $("#watch-english").textContent = `“${englishOf(id)}”`;
+  const meaning = meaningOf(id);
+  $("#watch-english").textContent = meaning ? `“${meaning}”` : "";
+  $("#watch-english").hidden = !meaning;
   $("#watch-howto").textContent = s.howTo ?? "";
   $("#watch-parts").innerHTML = renderParts(s.parts);
   const tip = $("#watch-tip");
@@ -699,13 +672,9 @@ function showWatch(id, i, mode = "first") {
     const d = await mountDemo(media, id, { slow });
     if (card !== watchCard) { d.destroy(); return; }
     watchDemo = d;
-    const both = d.hasVideo && d.hasAvatar;
-    $("#demo-source").hidden = !both;
-    for (const b of document.querySelectorAll("#demo-source button")) b.setAttribute("aria-pressed", String(b.dataset.src === d.kind));
     $("#btn-signer").hidden = d.kind !== "video" || (localClips?.get(id)?.length ?? 0) < 2;
-    $("#btn-play").hidden = !d.still?.();
-    credit.hidden = d.kind === "placeholder";
-    credit.textContent = d.kind === "video" ? `${CREDIT.video}${clipsOnThisComputer ? " Shown on this computer only." : ""}` : d.kind === "avatar" ? CREDIT.avatar : "";
+    credit.hidden = d.kind !== "video";
+    credit.textContent = d.kind === "video" ? `${CREDIT.video}${clipsOnThisComputer ? " Shown on this computer only." : ""}` : "";
   };
   mount();
   watchEl.hidden = false;
@@ -737,14 +706,6 @@ function showWatch(id, i, mode = "first") {
       slowBtn.setAttribute("aria-pressed", String(slow));
       watchDemo?.setSlow(slow);
     });
-    on($("#btn-play"), "click", () => { watchDemo?.play?.(); $("#btn-play").hidden = true; });
-    on($("#demo-source"), "click", (e) => {
-      const src = e.target.closest("button")?.dataset.src;
-      if (!src || src === demoPref) return;
-      demoPref = src;
-      try { localStorage.setItem(SOURCE_KEY, src); } catch { /* this visit only */ }
-      mount();
-    });
     on($("#btn-signer"), "click", () => { clipTurn.set(id, (clipTurn.get(id) ?? 0) + 1); mount(); });
   });
 }
@@ -771,8 +732,6 @@ function hidePip() {
   $("#pip-media").replaceChildren();
 }
 $("#pip").addEventListener("click", () => {
-  // a still demonstration (reduced motion) plays on the first tap; after that a tap slows it, as for everyone
-  if (pipDemo?.still?.()) { pipDemo.play(); return; }
   pipSlow = !pipSlow;
   $("#pip").classList.toggle("pip-slow", pipSlow);
   pipDemo?.setSlow(pipSlow);
@@ -927,7 +886,6 @@ async function learnSign(id, i) {
 const chatEl = $("#chat");
 let calmTimer = null;
 function clearChat() { chatEl.replaceChildren(); }
-function mayaFace() { return `<span class="maya-face" aria-hidden="true">${esc(PARTNER[0])}</span>`; }
 /* Maya "types", then her message slides in; what was said before slides away, so the camera stays clear. */
 async function mayaSays(text) {
   for (const old of [...chatEl.children]) {
@@ -936,10 +894,10 @@ async function mayaSays(text) {
   }
   const row = document.createElement("div");
   row.className = "msg msg-maya msg-in";
-  row.innerHTML = `${mayaFace()}<span class="bubble typing" aria-label="${esc(PARTNER)} is typing"><i></i><i></i><i></i></span>`;
+  row.innerHTML = `<span class="bubble typing" aria-label="${esc(PARTNER)} is typing"><i></i><i></i><i></i></span>`;
   chatEl.append(row);
   await sleep(REDUCED_MOTION ? 250 : TYPING_MS);
-  row.innerHTML = `${mayaFace()}<span class="bubble">${esc(text)}</span>`;
+  row.innerHTML = `<span class="bubble">${esc(text)}</span>`;
   row.classList.remove("msg-in");
   void row.offsetWidth;
   row.classList.add("msg-in");
@@ -949,13 +907,13 @@ async function mayaSays(text) {
 function youSay(turn, skipped) {
   const row = document.createElement("div");
   row.className = "msg msg-you msg-in";
-  const glosses = turn.reply.map(glossOf).join(" · ");
+  const glosses = turn.reply.map(glossOf).join(" ");
   row.innerHTML = `<span class="bubble">${esc(skipped ? "(skipped)" : turn.english ?? glosses)}<small>${esc(glosses)}</small></span>`;
   chatEl.append(row);
   announce(`You: ${turn.english ?? glosses}`);
 }
 function renderChips(reply) {
-  $("#chips").innerHTML = reply.map((id, k) => `<span class="chip" data-index="${k}" data-state="${k === 0 ? "next" : "pending"}"><b>${esc(glossOf(id))}</b><small>${esc(englishOf(id))}</small></span>`).join("");
+  $("#chips").innerHTML = reply.map((id, k) => `<span class="chip" data-index="${k}" data-state="${k === 0 ? "next" : "pending"}"><b>${esc(glossOf(id))}</b>${meaningOf(id) ? `<small>${esc(meaningOf(id))}</small>` : ""}</span>`).join("");
 }
 function chipState(k, s) {
   const c = $(`#chips .chip[data-index="${k}"]`);
@@ -1121,8 +1079,8 @@ function finish() {
         <span class="sign-text"><b>${esc(s.gloss)}</b><span>${esc(what)}</span></span></li>`;
   }).join("");
   $("#transcript").innerHTML = turns.map((t, k) => {
-    const glosses = t.reply.map(glossOf).join(" · ");
-    return `<div class="msg msg-maya" style="--delay:${300 + k * 120}ms">${mayaFace()}<span class="bubble">${esc(t.partner)}</span></div>
+    const glosses = t.reply.map(glossOf).join(" ");
+    return `<div class="msg msg-maya" style="--delay:${300 + k * 120}ms"><span class="bubble">${esc(t.partner)}</span></div>
       <div class="msg msg-you${t.skipped ? " msg-skipped" : ""}" style="--delay:${360 + k * 120}ms"><span class="bubble">${esc(t.skipped ? "(skipped)" : t.english ?? glosses)}<small>${esc(glosses)}</small></span></div>`;
   }).join("");
   $("#transcript-title").hidden = !turns.length;
@@ -1361,6 +1319,7 @@ addEventListener("keydown", (e) => {
 });
 
 renderSound();
+heroPictures();
 renderWelcome();
 $("#btn-start").disabled = false;
 $("#btn-start").textContent = "Start";

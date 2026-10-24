@@ -37,10 +37,8 @@ export const LESSON = deepFreeze({
   ],
 });
 
-/* The demonstrations are drawn from PopSign signers' own motion (docs/signs-design.md, "Demonstrations"), and the
- * licence (CC BY 4.0) asks for this credit wherever they are shown. The video form is for the local build only: the
- * clips never leave this computer, but if they are shown, they are credited as the manifest says. */
-export const ATTRIBUTION = "Sign motion from PopSign ASL v1.0 (Starner et al., 2023), CC BY 4.0.";
+/* The demonstrations are PopSign signers' own clips (docs/signs-design.md, "Demonstrations"), and the licence
+ * (CC BY 4.0) asks for this credit wherever they are shown. */
 export const ATTRIBUTION_VIDEO = "Sign videos: PopSign ASL v1.0 (Starner et al., 2023), CC BY 4.0. Clips were trimmed, scaled and re-encoded.";
 export const ATTRIBUTION_LINKS = deepFreeze({
   dataset: "https://signdata.cc.gatech.edu/view/datasets/popsign_v1_0/",
