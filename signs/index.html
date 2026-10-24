@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://storage.googleapis.com" crossorigin>
 <link rel="preload" href="../assets/fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="content.json" as="fetch" crossorigin>
-<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="app.css?v=429a20f14d">
 <!-- If the app's code cannot load (a dropped connection), Start says so and reloads, instead of staying "Loading…". -->
 <script>
 function bootFail() {
@@ -32,17 +32,18 @@ function bootFail() {
 }
 setTimeout(bootFail, 25000);
 </script>
-<script type="module" src="app.js" onerror="bootFail()"></script>
+<script type="importmap">{"imports":{"./app.js":"./app.js?v=9fe092541c","./capture.js":"./capture.js?v=00979c2163","./features.js":"./features.js?v=4bbc655d1f","./feedback.js":"./feedback.js?v=6fe90c9811","./lesson.js":"./lesson.js?v=89e910e30b","./measures.js":"./measures.js?v=089c68e526","./mock-recognizer.js":"./mock-recognizer.js?v=b47c5038f3","./model-runner.js":"./model-runner.js?v=3b8cb82c67","./recognizer.js":"./recognizer.js?v=b40e92efdc","./recognizer.worker.js":"./recognizer.worker.js?v=d2e56586b3","../tutor/blame.js":"../tutor/blame.js?v=ffcd2603b9","../tutor/commit.js":"../tutor/commit.js?v=1a9ab27621","../tutor/features.js":"../tutor/features.js?v=431e513f36","../tutor/feedback.js":"../tutor/feedback.js?v=c95625717c","../tutor/hand-frame.js":"../tutor/hand-frame.js?v=533e2ef2f2","../tutor/hand-model.js":"../tutor/hand-model.js?v=9651a08ac3","../tutor/landmarks.js":"../tutor/landmarks.js?v=c1783c19c4","../tutor/letters.js":"../tutor/letters.js?v=f6bff5961b","../tutor/linalg.js":"../tutor/linalg.js?v=5fed6df7cf","../tutor/mix.js":"../tutor/mix.js?v=d2027a6cf4","../tutor/motion.js":"../tutor/motion.js?v=b00888251e","../tutor/openfs.js":"../tutor/openfs.js?v=a11b403bf6","../tutor/pick-hand.js":"../tutor/pick-hand.js?v=e004c7ba8a","../tutor/prng.js":"../tutor/prng.js?v=80f02b2c8a","../tutor/schedule-dropout.js":"../tutor/schedule-dropout.js?v=9dcb9054ef","../tutor/vec.js":"../tutor/vec.js?v=5487bc0be0","../tutor/verifier.js":"../tutor/verifier.js?v=1c35ef5491","../js/core/tracker.js":"../js/core/tracker.js?v=8508e81c30","../config.js":"../config.js?v=a08dcbd2b4"}}</script>
+<script type="module" src="app.js?v=9fe092541c" onerror="bootFail()"></script>
 <!-- the whole module graph at once, instead of one level of imports per round trip -->
-<link rel="modulepreload" href="app.js">
-<link rel="modulepreload" href="capture.js">
-<link rel="modulepreload" href="mock-recognizer.js">
-<link rel="modulepreload" href="lesson.js">
-<link rel="modulepreload" href="../js/core/tracker.js">
-<link rel="modulepreload" href="../config.js">
-<link rel="modulepreload" href="../tutor/pick-hand.js">
-<link rel="modulepreload" href="../tutor/hand-frame.js">
-<link rel="modulepreload" href="../tutor/vec.js">
+<link rel="modulepreload" href="app.js?v=9fe092541c">
+<link rel="modulepreload" href="capture.js?v=00979c2163">
+<link rel="modulepreload" href="mock-recognizer.js?v=b47c5038f3">
+<link rel="modulepreload" href="lesson.js?v=89e910e30b">
+<link rel="modulepreload" href="../js/core/tracker.js?v=8508e81c30">
+<link rel="modulepreload" href="../config.js?v=a08dcbd2b4">
+<link rel="modulepreload" href="../tutor/pick-hand.js?v=e004c7ba8a">
+<link rel="modulepreload" href="../tutor/hand-frame.js?v=533e2ef2f2">
+<link rel="modulepreload" href="../tutor/vec.js?v=5487bc0be0">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.0.1/vision_bundle.mjs" crossorigin>
 </head>
 <body data-screen="welcome">
